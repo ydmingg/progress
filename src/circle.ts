@@ -13,6 +13,7 @@ export class Progress {
         this.size = size
         this.borderSize = borderSize
         this.color = color
+        this.maxProgress = Math.round(2 * ((this.size - this.borderSize) / 2) * Math.PI);
 
         // 初始化
         this.init()
@@ -46,8 +47,8 @@ export class Progress {
 
         // 初始化css
         circleContainer.style.position = "relative"
-        circleContainer.style.width = this.size + 'px'
-        circleContainer.style.height = this.size + 'px'
+        circleContainer.style.width =  `${this.size}px`
+        circleContainer.style.height = `${this.size}px`
         circleContainerValue.style.position = "absolute"
         circleContainerValue.style.top = "0"
         circleContainerValue.style.right = "0"
@@ -65,7 +66,6 @@ export class Progress {
         // 计算属性大小
         const circle_r = (this.size - this.borderSize) / 2
         const circle_stroke_width = this.borderSize
-        const circle_max_progress = Math.round(2 * circle_r * Math.PI)
         const circle_cx = circle_r + circle_stroke_width / 2
         const circle_transform = `rotate(${-90} ${circle_cx} ${circle_cx})`
 
@@ -76,8 +76,8 @@ export class Progress {
         circle.setAttribute("cx", circle_cx.toString())
         circle.setAttribute("cy", circle_cx.toString())
         circle.setAttribute("stroke-width", circle_stroke_width.toString())
-        circle.setAttribute("stroke-dasharray", circle_max_progress.toString())
-        circle.setAttribute("stroke-dashoffset", circle_max_progress.toString())
+        circle.setAttribute("stroke-dasharray", this.maxProgress.toString())
+        circle.setAttribute("stroke-dashoffset", this.maxProgress.toString())
         circle.setAttribute("transform", circle_transform)
 
         circleBg.setAttribute("r", circle_r.toString())
@@ -85,22 +85,21 @@ export class Progress {
         circleBg.setAttribute("cy", circle_cx.toString())
         circleBg.setAttribute("stroke-width", circle_stroke_width.toString())
 
-        this.maxProgress = circle_max_progress
         this.circle = circle
         this.circleContainerValue = circleContainerValue
 
     }
 
-    public animation(num: number = this.num) {
+    public animation(num = this.num):void {
         if (!this.circle || !this.circleContainerValue) return;
         // 将输入的0-100范围内的值转换为0-1之间的小数
         let normalizedValue = num / 100;
         // 计算当前进度
-        let currentProgress = this.maxProgress * (1 - normalizedValue);
+        let currentProgress = Math.round(this.maxProgress * (1 - normalizedValue));
         // 设置stroke-dashoffset属性
         this.circle.setAttribute("stroke-dashoffset", currentProgress.toString());
         // 设置进度值
-        this.circleContainerValue.innerHTML = num + "%";
+        this.circleContainerValue.textContent = `${num}%`;
     }   
     
     
