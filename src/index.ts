@@ -7,7 +7,7 @@ const progress = new Progress({
     node: app,
     size: 108,
     borderSize: 10,
-    color: "white",
+    color: "yellow",
     num:5 
 });
 
