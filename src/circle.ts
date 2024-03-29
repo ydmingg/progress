@@ -13,11 +13,10 @@ export class Progress {
         this.size = size
         this.borderSize = borderSize
         this.color = color
-        this.animation(num)
 
         // 初始化
         this.init()
-        
+        this.animation(num)
     }
 
     init() { 
@@ -30,12 +29,13 @@ export class Progress {
                 <div fxtag="progress_circle_value">0%</div>
             </div>
         `
-        if (this.node) {
-            this.node.innerHTML = tpl
-        } else { 
-            console.log("挂载点错误");
-            
+        if (!this.node) {
+            console.error("请检查挂载点是否正确！");
+            return;
         }
+
+        // 渲染dom
+        this.node.innerHTML = tpl
 
         // 获取dom
         const circleContainer = this.node.querySelector('[fxtag="progress_circle"]') as HTMLElement;
