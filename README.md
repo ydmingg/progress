@@ -6,7 +6,6 @@
 
 ```
 git clone git@github.com:ydmingg/progress.git
-
 ```
 
 #### 渲染DOM
@@ -22,7 +21,6 @@ const progress = new Progress({
     color: "yellow",
     num:5 
 });
-
 ```
 
 #### 动态进度
@@ -34,5 +32,4 @@ setInterval(() => {
     i++
     progress.animation(i)
 },1000/36)
-
 ```
